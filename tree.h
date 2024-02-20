@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 
 struct tree {
@@ -47,7 +48,7 @@ void def_hght(TREE* unit) {
 
 
 TREE* l_rotation(TREE* unit) {
-    TREE* tmp = unit->right;
+    TREE* tmp = unit->right; // 4
     unit->right = tmp->left;
     tmp->left = unit;
     def_hght(unit);
@@ -73,7 +74,7 @@ TREE* balance(TREE* unit) {
     int left = get_hght(unit->left);
     TREE* root = unit;
     
-    if (abs(left - right) < 2)
+    if (abs(right - left) < 2)
         def_hght(unit);
     
     else if (right - left == 2) {
@@ -105,13 +106,13 @@ TREE* balance(TREE* unit) {
 TREE* add(TREE* unit, int val) {
     if (val < unit->val) {
         if (unit->left)
-            add(unit->left, val);
+            unit->left = add(unit->left, val);
         else
             unit->left = init(val);
     }
     else {
         if (unit->right)
-            add(unit->right, val);
+            unit->right = add(unit->right, val);
         else
             unit->right = init(val);
     }
