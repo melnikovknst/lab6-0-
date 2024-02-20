@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <math.h>
 #include "tree.h"
 
 
@@ -32,6 +31,5 @@ int main(void) {
     search(elem, root);
     
     del(root);
-    
     return 0;
 }
