@@ -8,12 +8,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include<math.h>
+
 
 
 struct tree {
     int val;
-    int height;
     TREE* left;
     TREE* right;
 };
@@ -22,7 +22,6 @@ struct tree {
 TREE* init(int val) {
     TREE* unit = (TREE*)malloc(sizeof(TREE));
     unit->val = val;
-    unit->height = 1;
     unit->right = NULL;
     unit->left = NULL;
     
@@ -30,29 +29,18 @@ TREE* init(int val) {
 }
 
 
-int get_hght(TREE* unit) {
-    if (unit)
-        return unit->height;
+int height(TREE* unit) {
+    if (!unit)
+        return 0;
     
-    return 0;
-}
-
-
-void def_hght(TREE* unit) {
-    unit->height = get_hght(unit->left);
-    
-    if (unit->height < get_hght(unit->right))
-        unit->height = get_hght(unit->right);
-    unit->height++;
+    return fmax(height(unit->left), height(unit->right)) + 1;
 }
 
 
 TREE* l_rotation(TREE* unit) {
-    TREE* tmp = unit->right; // 4
+    TREE* tmp = unit->right;
     unit->right = tmp->left;
     tmp->left = unit;
-    def_hght(unit);
-    def_hght(tmp);
     
     return tmp;
 }
@@ -62,23 +50,18 @@ TREE* r_rotation(TREE* unit) {
     TREE* tmp = unit->left;
     unit->left = tmp->right;
     tmp->right = unit;
-    def_hght(unit);
-    def_hght(tmp);
     
     return tmp;
 }
 
 
 TREE* balance(TREE* unit) {
-    int right = get_hght(unit->right);
-    int left = get_hght(unit->left);
+    int right = height(unit->right);
+    int left = height(unit->left);
     TREE* root = unit;
     
-    if (abs(right - left) < 2)
-        def_hght(unit);
-    
-    else if (right - left == 2) {
-        if (get_hght(unit->right->right) >= get_hght(unit->right->left))
+    if (right - left == 2) {
+        if (height(unit->right->right) >= height(unit->right->left))
 //            small left rotation
             root = l_rotation(unit);
         else {
@@ -88,8 +71,8 @@ TREE* balance(TREE* unit) {
         }
     }
     
-    else {
-        if (get_hght(unit->left->left) >= get_hght(unit->left->right))
+    else if (left - right == 2){
+        if (height(unit->left->left) >= height(unit->left->right))
 //            small right rotation
             root = r_rotation(unit);
         else {
@@ -135,7 +118,7 @@ void ordered_print(TREE* unit) {
 
 void search(int elem, TREE* unit) {
     if (unit->val == elem)
-        printf("Element %d found, height: %d\n", elem, unit->height);
+        printf("Element %d found, height: %d\n", elem, height(unit));
 
     else if (elem < unit->val && unit->left)
         search(elem, unit->left);
