@@ -57,31 +57,30 @@ TREE* r_rotation(TREE* unit) {
 TREE* balance(TREE* unit) {
     int right = height(unit->right);
     int left = height(unit->left);
-    TREE* root = unit;
     
     if (right - left == 2) {
         if (height(unit->right->right) >= height(unit->right->left))
 //            small left rotation
-            root = l_rotation(unit);
+            unit = l_rotation(unit);
         else {
 //            big left rotation
             unit->right = r_rotation(unit->right);
-            root = l_rotation(unit);
+            unit = l_rotation(unit);
         }
     }
     
     else if (left - right == 2){
         if (height(unit->left->left) >= height(unit->left->right))
 //            small right rotation
-            root = r_rotation(unit);
+            unit = r_rotation(unit);
         else {
 //            big right rotation
             unit->left = l_rotation(unit->left);
-            root = r_rotation(unit);
+            unit = r_rotation(unit);
         }
     }
       
-    return root;
+    return unit;
 }
 
 
