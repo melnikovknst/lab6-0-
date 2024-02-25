@@ -19,8 +19,8 @@ int main(void) {
         scanf("%d", &buf);
         root = add(root, buf);
     }
-    
-    printf("\nTree height: %d\n", root->height);
+
+    printf("//\nTree height: %d\n", height(root));
     puts("-----");
     ordered_print(root);
     
@@ -31,5 +31,7 @@ int main(void) {
     search(elem, root);
     
     del(root);
+    
+
     return 0;
 }
