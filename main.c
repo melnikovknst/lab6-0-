@@ -32,6 +32,5 @@ int main(void) {
     
     del(root);
     
-
     return 0;
 }
