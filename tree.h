@@ -36,7 +36,7 @@ int height(TREE* unit) {
 }
 
 
-TREE* l_rotation(TREE* unit) {
+TREE* lft_rotation(TREE* unit) {
     TREE* tmp = unit->right;
     unit->right = tmp->left;
     tmp->left = unit;
@@ -45,7 +45,7 @@ TREE* l_rotation(TREE* unit) {
 }
 
 
-TREE* r_rotation(TREE* unit) {
+TREE* rght_rotation(TREE* unit) {
     TREE* tmp = unit->left;
     unit->left = tmp->right;
     tmp->right = unit;
@@ -61,22 +61,22 @@ TREE* balance(TREE* unit) {
     if (right - left == 2) {
         if (height(unit->right->right) >= height(unit->right->left))
 //            small left rotation
-            unit = l_rotation(unit);
+            unit = lft_rotation(unit);
         else {
 //            big left rotation
-            unit->right = r_rotation(unit->right);
-            unit = l_rotation(unit);
+            unit->right = rght_rotation(unit->right);
+            unit = lft_rotation(unit);
         }
     }
     
     else if (left - right == 2){
         if (height(unit->left->left) >= height(unit->left->right))
 //            small right rotation
-            unit = r_rotation(unit);
+            unit = rght_rotation(unit);
         else {
 //            big right rotation
-            unit->left = l_rotation(unit->left);
-            unit = r_rotation(unit);
+            unit->left = lft_rotation(unit->left);
+            unit = rght_rotation(unit);
         }
     }
       
@@ -141,4 +141,3 @@ void del(TREE* unit) {
 }
 
 #endif /* tree_h */
-
